@@ -18,7 +18,7 @@ const BookCarousel = () => {
       {data
         .slice(index * itemPerPage, (index + 1) * itemPerPage)
         .map((item, itemIndex) => (
-          <Paper key={itemIndex} style={{ margin: '0 15px', height: '200px', width: '200px' }}>
+          <Paper key={itemIndex} style={{ margin: '0 15px', height: '300px', width: '200px' }}>
             <Typography variant="h5">{item.item}</Typography>
             <Typography variant="body1">{item.content}</Typography>
           </Paper>
@@ -55,7 +55,7 @@ const BookCarousel = () => {
   
   return(
     <Box sx={{display: 'flex', margin: 'auto'}}>
-    <SideMenu/>
+      <SideMenu/>
       <Box sx={{ width: '75%',  margin: '0 auto' }}>
         <Carousel
           showArrows={true}
