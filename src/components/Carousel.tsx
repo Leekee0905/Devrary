@@ -1,26 +1,47 @@
-import { Box, Typography, Paper, Button } from '@mui/material'
+import { Box, Typography, Paper, Button, Link } from '@mui/material'
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import SideMenu from './SideMenu';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 const itemPerPage = 4
-const BookCarousel = () => {
-  const data = [{item: 'title',content: 'content'},{item: 'title',content: 'content'},{item: 'title',content: 'content'},{item: 'title',content: 'content'},{item: 'title',content: 'content'}]
-  const totalSlides = Math.ceil(data.length / itemPerPage);
-
+const BookCarousel = (props:any) => {
+  const router = useRouter();
+  const [bookData, setBookData] = useState<any>([])
+  const totalSlides = Math.ceil(bookData.length / itemPerPage);
+  const [thumbnailType, setThumbnailType] = useState<string>('베스트셀러')
+  const { isLoading } = useQuery({
+    queryKey: ['type',thumbnailType],
+    queryFn: ()=>axios.get('/api/bestseller'),
+    onSuccess:({data})=>{
+      setBookData(data.item)
+      console.log(data)
+    }
+  })
+  console.log(thumbnailType)
   const slides = Array.from({ length: totalSlides }).map((_, index) => (
     <Box key={index} style={{
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
     }}>
-      {data
+      {bookData
         .slice(index * itemPerPage, (index + 1) * itemPerPage)
-        .map((item, itemIndex) => (
-          <Paper key={itemIndex} style={{ margin: '0 15px', height: '300px', width: '200px' }}>
-            <Typography variant="h5">{item.item}</Typography>
-            <Typography variant="body1">{item.content}</Typography>
+        .map((item:any, itemIndex:number) => (
+          <Paper key={itemIndex} style={{ margin: '0 15px', height: '300px', width: '200px', cursor: 'pointer'}}
+            onClick={()=>{
+              router.push({
+                pathname: '/bookDetail',
+                query: {
+                  bookId: item.isbn13
+                }
+              })}}
+          >
+              <img src={item.thumbnailUrl} alt='책' style={{height: '300px', width: '200px'}} loading='lazy'/>
           </Paper>
         ))}
     </Box>
@@ -55,7 +76,7 @@ const BookCarousel = () => {
   
   return(
     <Box sx={{display: 'flex', margin: 'auto'}}>
-      <SideMenu/>
+      <SideMenu setType={setThumbnailType}/>
       <Box sx={{ width: '75%',  margin: '0 auto' }}>
         <Carousel
           showArrows={true}
