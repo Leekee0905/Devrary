@@ -9,6 +9,7 @@ interface BestSellerItemType {
   publisher: string;
   pubDate: string;
   description: string;
+  thumbnailUrl: string;
   customerReviesRank: number;
   isbn13: string;
   priceStandard: number;
