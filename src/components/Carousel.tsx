@@ -16,8 +16,19 @@ const BookCarousel = (props:any) => {
   const [thumbnailType, setThumbnailType] = useState<string>('베스트셀러')
   const { isLoading } = useQuery({
     queryKey: ['type',thumbnailType],
-    queryFn: ()=>axios.get('/api/bestseller'),
-    onSuccess:({data})=>{
+    queryFn: ()=> {
+      if(thumbnailType === '베스트셀러'){
+        return axios.get('/api/bestseller')
+      }
+      else if(thumbnailType === '신간도서'){
+        return axios.get('/api/newAll')
+      }
+      else if(thumbnailType === '편집자추천'){
+        return axios.get('/api/editorChoice')
+      }
+    }
+    ,
+    onSuccess:({data}: any)=>{
       setBookData(data.item)
       console.log(data)
     }
