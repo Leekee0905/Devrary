@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import { Box, CircularProgress, Container, Link, Paper, Typography } from "@mui/material";
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios";
@@ -47,12 +48,7 @@ const BookDetail = () => {
 
   return(
     isLoading ? 
-    <Container>
-      <Box sx={{alignItems: 'center', textAlign: 'center', marginTop: '20%'}}>
-        <CircularProgress size={100} color="inherit"/>
-        <Typography variant="h1">로딩중입니다.....</Typography>
-      </Box>
-    </Container> 
+    <Loading/>
     :
     <>
       <Container>
