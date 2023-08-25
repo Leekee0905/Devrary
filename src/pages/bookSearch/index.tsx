@@ -1,5 +1,6 @@
+import Loading from "@/components/Loading"
 import SearchBar from "@/components/SearchBar"
-import { Typography } from "@mui/material"
+import { Box, Container, Paper, Typography } from "@mui/material"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 import { useRouter } from "next/router"
@@ -19,29 +20,46 @@ const BookSearch = () => {
       console.log(data)
       setBooks(data.item)
     },
-    staleTime: Infinity
   })
+  console.log(books)
 
-  if(isLoading){
-    return(
-      <Typography>
-        Now on Loading...
-      </Typography>
-    )
+  const handleRouteBookDetail = (id: string) => {
+    router.push({
+      pathname: '/bookDetail',
+      query: {
+        bookId: id
+      }
+    })
   }
+
   return(
-    <>
-    <SearchBar/>
-    {
-      books.map((e: any,idx:number)=>{
-        return(
-          <Typography key={idx}>
-            {e.title}
-          </Typography>
-        )
-      })
-    }
-    </>
+    isLoading ? 
+    <Loading/>
+    :
+    <Container>
+      <SearchBar/>
+      <ul>
+        {
+          books.map((e: any,idx:number)=>{
+            return(
+              <li key={idx} style={{borderTop: '1px solid #d5d5d5', listStyle: 'none'}}>
+                <Box key={idx}  sx={{display: 'flex', marginY: '12px' }}>
+                  <Paper style={{ margin: '0 15px', height: '200px', width: '150px', cursor: 'pointer'}} onClick={()=>handleRouteBookDetail(e.isbn13)}>
+                    <img src={e.thumbnailUrl} alt="책썸네일" style={{height: '200px', width: '150px',}}/>
+                  </Paper>
+                  <Box>
+                    <Typography>{e.title}</Typography>
+                    <Typography>{e.author}</Typography>
+                    <Typography>{e.priceStandard}원</Typography>
+                  </Box>
+                  
+                </Box>
+              </li>
+            )
+          })
+        }
+      </ul>
+    </Container>
   )
 }
 
