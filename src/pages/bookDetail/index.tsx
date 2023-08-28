@@ -1,5 +1,6 @@
 import Loading from "@/components/Loading";
-import { Box, CircularProgress, Container, Link, Paper, Typography } from "@mui/material";
+import SearchBar from "@/components/SearchBar";
+import { Box, Container, Link, Paper, Typography, Divider } from "@mui/material";
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios";
 import { useRouter } from "next/router"
@@ -52,15 +53,16 @@ const BookDetail = () => {
     :
     <>
       <Container>
-        <Box className="bookFirstBox" sx={{display: 'flex', justifyContent: 'space-between'}}>
+        <SearchBar/>
+        <Box className="bookFirstBox" sx={{display: 'flex', justifyContent: 'space-between', marginBottom: '20px'}}>
           <Box className="boook-image">
             <Paper style={{ margin: '0 15px', height: '300px', width: '200px'}}>
               <img src={detailData.thumbnailUrl} alt="책썸네일"/>
             </Paper>
           </Box>
           <Box className="detailBox" sx={{flexGrow: 1}}>
-            <Box sx={{ display: 'flex', marginY: '10px', alignItems: 'center'}}>
-              <Typography variant="h5">제목</Typography>
+            <Box sx={{ display: 'flex', marginY: '10px', alignItems: 'center', minWidth: '50px'}}>
+              <Typography variant="h5" sx={{whiteSpace: 'nowrap'}}>제목</Typography>
               <Typography  sx={{marginLeft: '12px'}}>{detailData.title}</Typography>
             </Box>
 
@@ -82,18 +84,21 @@ const BookDetail = () => {
             
 
           </Box>
+          <Divider orientation="vertical" flexItem sx={{marginX: '20px'}} />
           <Box className="links">
             <Link href={detailData.link} underline="none" sx={{color: 'black'}}>
-              <Typography sx={{marginY: '12px'}}>네이버 링크</Typography>
+              <Typography sx={{marginY: '12px', whiteSpace: 'nowrap'}}>네이버 링크</Typography>
             </Link>
             <Link href={detailData.link} underline="none" sx={{color: 'black'}}>
-              <Typography sx={{marginY: '12px'}}>알라딘 링크</Typography>
+              <Typography sx={{marginY: '12px', whiteSpace: 'nowrap'}}>알라딘 링크</Typography>
             </Link>
             <Link href={detailData.link} underline="none" sx={{color: 'black'}}>
-              <Typography sx={{marginY: '12px'}}>인터파크 링크</Typography>
+              <Typography sx={{marginY: '12px', whiteSpace: 'nowrap'}}>인터파크 링크</Typography>
             </Link>
           </Box>
         </Box>
+
+        <Divider/>
 
         <Box className="description" sx={{margin: '15px auto'}}>
           <Typography variant="h5">책에 대한 간단한 설명</Typography>
@@ -101,7 +106,7 @@ const BookDetail = () => {
         </Box>
 
         <Box className="review">
-          <Typography>작성된 서평</Typography>
+          <Typography variant="h5">작성된 서평</Typography>
         </Box>
       </Container>
     </>
