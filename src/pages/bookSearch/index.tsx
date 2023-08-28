@@ -17,11 +17,9 @@ const BookSearch = () => {
       }
     }),
     onSuccess:({data})=>{
-      console.log(data)
       setBooks(data.item)
     },
   })
-  console.log(books)
 
   const handleRouteBookDetail = (id: string) => {
     router.push({
@@ -43,14 +41,14 @@ const BookSearch = () => {
           books.map((e: any,idx:number)=>{
             return(
               <li key={idx} style={{borderTop: '1px solid #d5d5d5', listStyle: 'none'}}>
-                <Box key={idx}  sx={{display: 'flex', marginY: '12px' }}>
+                <Box key={idx}  sx={{display: 'flex', marginY: '50px' }}>
                   <Paper style={{ margin: '0 15px', height: '200px', width: '150px', cursor: 'pointer'}} onClick={()=>handleRouteBookDetail(e.isbn13)}>
                     <img src={e.thumbnailUrl} alt="책썸네일" style={{height: '200px', width: '150px',}}/>
                   </Paper>
                   <Box>
-                    <Typography>{e.title}</Typography>
-                    <Typography>{e.author}</Typography>
-                    <Typography>{e.priceStandard}원</Typography>
+                    <Typography sx={{fontSize: '15px', fontWeight: 500, marginY: '20px'}}>{e.title}</Typography>
+                    <Typography sx={{fontSize: '13px', marginY: '20px'}}>{e.author}</Typography>
+                    <Typography sx={{fontSize: '14px', marginY: '20px'}}>{e.priceStandard}원</Typography>
                   </Box>
                   
                 </Box>
