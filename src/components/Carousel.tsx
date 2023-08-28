@@ -30,30 +30,34 @@ const BookCarousel = (props:any) => {
     ,
     onSuccess:({data}: any)=>{
       setBookData(data.item)
-      console.log(data)
     }
   })
-  console.log(thumbnailType)
+
   const slides = Array.from({ length: totalSlides }).map((_, index) => (
     <Box key={index} style={{
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
+      alignItems: 'center'
     }}>
       {bookData
         .slice(index * itemPerPage, (index + 1) * itemPerPage)
         .map((item:any, itemIndex:number) => (
-          <Paper key={itemIndex} style={{ margin: '0 15px', height: '300px', width: '200px', cursor: 'pointer'}}
-            onClick={()=>{
-              router.push({
-                pathname: '/bookDetail',
-                query: {
-                  bookId: item.isbn13
-                }
-              })}}
-          >
-              <img src={item.thumbnailUrl} alt='책' style={{height: '300px', width: '200px'}} loading='lazy'/>
-          </Paper>
+          <Box key={itemIndex}>
+            <Paper  style={{ margin: '0 15px', height: '300px', width: '200px', cursor: 'pointer', marginBottom: '12px'}}
+              onClick={()=>{
+                router.push({
+                  pathname: '/bookDetail',
+                  query: {
+                    bookId: item.isbn13
+                  }
+                })}}
+            >
+                <img src={item.thumbnailUrl} alt='책' style={{height: '300px', width: '200px'}} loading='lazy'/>
+            </Paper>
+            <Typography sx={{fontSize: '12px', maxWidth: '200px',overflow: 'hidden', textOverflow: 'ellipsis',margin: '0 auto' }}>{item.title}</Typography>
+          </Box>
+          
         ))}
     </Box>
   ));
@@ -88,7 +92,7 @@ const BookCarousel = (props:any) => {
   return(
     <Box sx={{display: 'flex', margin: 'auto'}}>
       <SideMenu setType={setThumbnailType}/>
-      <Box sx={{ width: '75%',  margin: '0 auto' }}>
+      <Box sx={{ width: '80%',  margin: '0 auto' }}>
         <Carousel
           showArrows={true}
           emulateTouch={true}
