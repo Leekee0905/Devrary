@@ -8,7 +8,7 @@ interface SideMenuProps {
 
 const SideMenu = ({ setType }: SideMenuProps) => {
 
-  const [selected , setSelected] = useState<number>(1)
+  const [selected , setSelected] = useState<number>(0)
   const handleSideBtn = (e: React.MouseEvent<HTMLDivElement>, index: number) => {
     const clickedText = e.currentTarget.innerText;
     setType(clickedText)
